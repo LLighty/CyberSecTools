@@ -3,12 +3,15 @@ Creating my own personal tools as a learning experience.
 
 # Keylogger
 Current implementation utilises the pynput library to capture key presses to the console.
-Late will write to a file and make note of which window was active when a key was pressed.
+Currently also captures what the focused window is for Windows operating systems.
 
-Usage: python3 KeyLogger.py
+Usage: python3 KeyLogger.py [Options]
 
 - Once running use F1 to stop the listener
-
+- Options are:
+    - -d --delay: sets the file writing delay e.g. 5 would update the file every 5 seconds.
+    - -f --filename: sets where the data will be saved.
+    - -v --version: prints out the current version.
 # Miscellaneous
 
 ## Auto Clicker
