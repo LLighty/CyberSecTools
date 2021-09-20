@@ -23,3 +23,13 @@ Usage: python3 AutoClicker.py
 - Use the 's' key to close the program
 
 # Port Scanner 
+Very basic script which utilizes pythons inbuilt socket library to make tcp calls to a 
+set range of ports of a host both defined by the user.
+
+Usage: python3 SimplePortScanner.py
+
+* Enter the input when prompted to do so
+    * Three prompts: 
+        * IPv4 address
+        * Port Range: 0-25565
+        * Number of threads to run concurrently
