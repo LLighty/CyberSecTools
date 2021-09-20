@@ -1,14 +1,18 @@
-from threading import Thread
-import time
+from threading import Thread, Lock
+from datetime import datetime
 from queue import Queue
 import ipaddress
+import socket
+import sys
 from pyfiglet import Figlet
 
 ip = None
 port_range = [0, 25565]
 threads = 1
+thread_array = []
 debug = True
 queue = None
+print_lock = Lock()
 
 
 def main():
@@ -42,9 +46,18 @@ def main():
     if threads <= 0:
         print('You cannot have no threads - defaulting to one')
         threads = 1
+    print("You are scanning {} with range {}".format(ip, port_range))
+    start_time = datetime.now()
+    print("Start time {}".format(start_time))
     for i in range(threads):
         thread = Thread(target=discover_port, args=(i,))
+        thread_array.append(thread)
         thread.start()
+    for thread in thread_array:
+        thread.join()
+    finish_time = datetime.now()
+    print("Finished at {}".format(finish_time))
+    print("Total elapsed time {}".format(finish_time - start_time))
 
 
 def check_range(test_range):
@@ -69,11 +82,25 @@ def check_range(test_range):
     return True
 
 
-# todo - update this to identify open ports
 def discover_port(thread_id):
     while not queue.empty():
         port = queue.get()
-        print(str(port) + ' port queried from thread ' + str(thread_id))
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            result = sock.connect_ex((str(ip), port))
+            if result == 0:
+                with print_lock:
+                    print("Port {} is open".format(port))
+            if debug:
+                with print_lock:
+                    print(str(port) + ' port queried from thread ' + str(thread_id))
+            sock.close()
+        except socket.error:
+            print("Could not connect to the server")
+            sys.exit()
+        except KeyboardInterrupt:
+            print("Keyboard Interrupt occured. Exiting.")
+            sys.exit()
 
 
 def initialise_queue():
