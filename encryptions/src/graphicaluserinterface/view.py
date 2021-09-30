@@ -10,7 +10,8 @@ class View:
         self.encode_button = None
         self.decode_button = None
         self.choose_algorithm = None
-        self.algorithm_widgets = None
+        self.choose_algorithm_value = None
+        self.algorithm_widgets = []
         self.main_frame = self.create_main_frame(master)
         self.side_bar = self.create_side_panel(master)
 
@@ -29,7 +30,8 @@ class View:
         self.decode_button = tk.Button(side_bar, width=10, text="Decode")
         algorithm_options = tk.StringVar(side_bar)
         algorithm_options.set(IMPLEMENTED_ALGORITHMS[0])
-        self.choose_algorithm = tk.OptionMenu(side_bar, algorithm_options, *IMPLEMENTED_ALGORITHMS)
+        self.choose_algorithm_value = IMPLEMENTED_ALGORITHMS[0]
+        self.choose_algorithm = tk.OptionMenu(side_bar, algorithm_options, *IMPLEMENTED_ALGORITHMS, command=self.update_selected_algorithm)
         self.choose_algorithm.pack()
         self.create_algorithm_widget(IMPLEMENTED_ALGORITHMS[0], side_bar)
         self.encode_button.pack(side=tk.TOP, pady=200)
@@ -41,6 +43,10 @@ class View:
     # Cipher.
     def create_algorithm_widget(self, algorithm, master):
         if algorithm == 'Caesar Cipher':
-            self.algorithm_widgets = None
-            self.algorithm_widgets = tk.Entry(master, bd=2)
-            self.algorithm_widgets.pack()
+            self.algorithm_widgets = []
+            self.algorithm_widgets.append(tk.Entry(master, bd=2))
+            for widget in self.algorithm_widgets:
+                widget.pack()
+
+    def update_selected_algorithm(self, value):
+        self.choose_algorithm_value = value
