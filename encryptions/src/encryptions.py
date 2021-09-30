@@ -1,4 +1,4 @@
-from graphicaluserinterface.Controller import Controller
+from graphicaluserinterface.controller import Controller
 
 
 def main():

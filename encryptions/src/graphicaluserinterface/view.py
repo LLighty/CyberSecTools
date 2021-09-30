@@ -1,5 +1,5 @@
 import tkinter as tk
-from algorithms.Algorithms import IMPLEMENTED_ALGORITHMS
+from algorithms.algorithms import IMPLEMENTED_ALGORITHMS
 
 
 class View:
