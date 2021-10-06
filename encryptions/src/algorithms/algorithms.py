@@ -1,4 +1,7 @@
-IMPLEMENTED_ALGORITHMS = ['Caesar Cipher', ]
+from itertools import cycle
+import base64
+
+IMPLEMENTED_ALGORITHMS = ['Caesar Cipher', 'Simple XOR', ]
 
 
 # Only works with English
@@ -85,3 +88,34 @@ def rotate_backwards(char_int, amount):
 # Checking whether a character is a capital or not using Ascii encodings
 def check_capital_letter(char):
     return ord(char) < 91
+
+
+def encode_decode_simple_xor(data, xorstream, encode=False, decode=False):
+    if decode:
+        data = base64.decodebytes(data.encode())
+        data = data.decode()
+    xored_string = ''.join(chr(ord(x) ^ ord(y)) for (x, y) in zip(data, cycle(xorstream)))
+
+    if encode:
+        return base64.encodebytes(xored_string.encode()).strip()
+    return xored_string
+
+
+def encode_decode_simple_substitution(data, alphabet, encode=False, decode=False):
+    None
+
+
+def encode_AES(data, key):
+    None
+
+
+def decode_AES(data, key):
+    None
+
+
+def encode_RSA(data, key):
+    None
+
+
+def decode_RSA(data, key):
+    None

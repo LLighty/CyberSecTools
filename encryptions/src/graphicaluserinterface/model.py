@@ -13,6 +13,11 @@ class Model:
                 return e_algorithms.encode_caesar_cipher(data, rotation)
             except ValueError:
                 print('Rotation value was not an integer')
+        if algorithm == e_algorithms.IMPLEMENTED_ALGORITHMS[1]:
+            try:
+                return e_algorithms.encode_decode_simple_xor(data, options[0], encode=True)
+            except Exception as e:
+                print(e)
         return ''
 
     def decode(self, data, algorithm):
@@ -25,4 +30,9 @@ class Model:
                 return e_algorithms.decode_caesar_cipher(data, rotation)
             except ValueError:
                 print('Rotation value was not an integer')
+        if algorithm == e_algorithms.IMPLEMENTED_ALGORITHMS[1]:
+            try:
+                return e_algorithms.encode_decode_simple_xor(data, options[0], decode=True)
+            except Exception as e:
+                print(e)
         return ''

@@ -21,18 +21,16 @@ class Controller:
         self.view.decode_button.bind("<Button>", self.decode_button)
 
     def encode_button(self, val):
+        self.view.decode_text.delete('1.0', Tk.END)
         algorithm = self.check_algorithm()
-        if algorithm == e_algorithms.IMPLEMENTED_ALGORITHMS[0]:
-            self.view.decode_text.delete('1.0', Tk.END)
-            self.view.decode_text.insert(Tk.END, self.model.encode(self.get_string_to_encode(), algorithm,
-                                                                   self.get_algorithm_options()))
+        self.view.decode_text.insert(Tk.END, self.model.encode(self.get_string_to_encode(), algorithm,
+                                                               self.get_algorithm_options()))
 
     def decode_button(self, val):
+        self.view.encode_text.delete('1.0', Tk.END)
         algorithm = self.check_algorithm()
-        if algorithm == e_algorithms.IMPLEMENTED_ALGORITHMS[0]:
-            self.view.encode_text.delete('1.0', Tk.END)
-            self.view.encode_text.insert(Tk.END, self.model.decode(self.get_string_to_decode(), algorithm,
-                                                                   self.get_algorithm_options()))
+        self.view.encode_text.insert(Tk.END, self.model.decode(self.get_string_to_decode(), algorithm,
+                                                               self.get_algorithm_options()))
 
     def check_algorithm(self):
         return self.view.choose_algorithm_value

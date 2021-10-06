@@ -14,6 +14,7 @@ class View:
         self.algorithm_widgets = []
         self.main_frame = self.create_main_frame(master)
         self.side_bar = self.create_side_panel(master)
+        self.create_algorithm_widget(IMPLEMENTED_ALGORITHMS[0], self.side_bar)
 
     def create_main_frame(self, root):
         main_frame = tk.Frame(root, bg='#CCC', width=500, height=500)
@@ -32,9 +33,8 @@ class View:
         algorithm_options.set(IMPLEMENTED_ALGORITHMS[0])
         self.choose_algorithm_value = IMPLEMENTED_ALGORITHMS[0]
         self.choose_algorithm = tk.OptionMenu(side_bar, algorithm_options, *IMPLEMENTED_ALGORITHMS, command=self.update_selected_algorithm)
-        self.choose_algorithm.pack()
-        self.create_algorithm_widget(IMPLEMENTED_ALGORITHMS[0], side_bar)
         self.encode_button.pack(side=tk.TOP, pady=200)
+        self.choose_algorithm.pack()
         self.decode_button.pack(side=tk.BOTTOM, pady=200)
         side_bar.pack(expand=False, fill='both', side='right', anchor='nw')
         return side_bar
@@ -42,11 +42,22 @@ class View:
     # Creates the widget needed for the algorithm. For example a text box asking the number of rotations for Caesar
     # Cipher.
     def create_algorithm_widget(self, algorithm, master):
-        if algorithm == 'Caesar Cipher':
+        self.clear_algorithm_widgets()
+        if algorithm == IMPLEMENTED_ALGORITHMS[0]:
+            self.algorithm_widgets = []
+            self.algorithm_widgets.append(tk.Entry(master, bd=2))
+            for widget in self.algorithm_widgets:
+                widget.pack()
+        if algorithm == IMPLEMENTED_ALGORITHMS[1]:
             self.algorithm_widgets = []
             self.algorithm_widgets.append(tk.Entry(master, bd=2))
             for widget in self.algorithm_widgets:
                 widget.pack()
 
+    def clear_algorithm_widgets(self):
+        for widget in self.algorithm_widgets:
+            widget.destroy()
+
     def update_selected_algorithm(self, value):
         self.choose_algorithm_value = value
+        self.create_algorithm_widget(value, self.side_bar)
