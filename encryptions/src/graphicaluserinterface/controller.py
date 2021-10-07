@@ -1,6 +1,6 @@
 import tkinter as Tk
 import algorithms.algorithms as e_algorithms
-from .view import View
+from .view import View, SubPopupWindow
 from .model import Model
 
 
@@ -10,6 +10,8 @@ class Controller:
         self.model = Model()
         self.view = View(self.root)
         self.bind_widgets()
+        self.sub_popup_active = False
+        self.sub_alphabet = {}
 
     def run(self):
         self.root.title("Encoding and Decoding different encryptions")
@@ -19,6 +21,7 @@ class Controller:
     def bind_widgets(self):
         self.view.encode_button.bind("<Button>", self.encode_button)
         self.view.decode_button.bind("<Button>", self.decode_button)
+        self.view.algorithm_options.trace('w', self.update_algorithm_options)
 
     def encode_button(self, val):
         self.view.decode_text.delete('1.0', Tk.END)
@@ -32,6 +35,15 @@ class Controller:
         self.view.encode_text.insert(Tk.END, self.model.decode(self.get_string_to_decode(), algorithm,
                                                                self.get_algorithm_options()))
 
+    def update_algorithm_options(self, *args):
+        self.view.choose_algorithm_value = self.view.algorithm_options.get()
+        self.view.create_algorithm_widget(self.view.algorithm_options.get(), self.view.side_bar)
+        self.check_binds(self.view.algorithm_options.get())
+
+    def check_binds(self, algorithm):
+        if algorithm == e_algorithms.IMPLEMENTED_ALGORITHMS[2]:
+            self.view.algorithm_widgets[0].bind("<Button>", self.create_sub_popup_window)
+
     def check_algorithm(self):
         return self.view.choose_algorithm_value
 
@@ -44,5 +56,13 @@ class Controller:
     def get_algorithm_options(self):
         options = []
         for widget in self.view.algorithm_widgets:
-            options.append(widget.get())
+            try:
+                options.append(widget.get())
+            except AttributeError as e:
+                None
         return options
+
+    def create_sub_popup_window(self, *args):
+        if not self.sub_popup_active:
+            sub_popup_window = SubPopupWindow(self)
+            self.sub_popup_active = True

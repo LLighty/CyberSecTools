@@ -1,7 +1,7 @@
 from itertools import cycle
 import base64
 
-IMPLEMENTED_ALGORITHMS = ['Caesar Cipher', 'Simple XOR', ]
+IMPLEMENTED_ALGORITHMS = ['Caesar Cipher', 'Simple XOR Cipher', 'Substitution Cipher', ]
 
 
 # Only works with English
