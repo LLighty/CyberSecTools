@@ -101,8 +101,11 @@ def encode_decode_simple_xor(data, xorstream, encode=False, decode=False):
     return xored_string
 
 
-def encode_decode_simple_substitution(data, alphabet, encode=False, decode=False):
-    None
+def encode_decode_simple_substitution(data, alphabet, decode=False):
+    if decode:
+        alphabet = {v: k for k, v in alphabet.items()}
+    modified_data = "".join([alphabet.get(c) for c in data])
+    return modified_data
 
 
 def encode_AES(data, key):

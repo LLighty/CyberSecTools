@@ -18,6 +18,11 @@ class Model:
                 return e_algorithms.encode_decode_simple_xor(data, options[0], encode=True)
             except Exception as e:
                 print(e)
+        if algorithm == e_algorithms.IMPLEMENTED_ALGORITHMS[2]:
+            try:
+                return e_algorithms.encode_decode_simple_substitution(data, options[0])
+            except Exception as e:
+                print(e)
         return ''
 
     def decode(self, data, algorithm):
@@ -33,6 +38,11 @@ class Model:
         if algorithm == e_algorithms.IMPLEMENTED_ALGORITHMS[1]:
             try:
                 return e_algorithms.encode_decode_simple_xor(data, options[0], decode=True)
+            except Exception as e:
+                print(e)
+        if algorithm == e_algorithms.IMPLEMENTED_ALGORITHMS[2]:
+            try:
+                return e_algorithms.encode_decode_simple_substitution(data, options[0], decode=True)
             except Exception as e:
                 print(e)
         return ''
