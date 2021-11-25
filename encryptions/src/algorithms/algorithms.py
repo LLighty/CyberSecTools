@@ -1,7 +1,9 @@
 from itertools import cycle
+from Crypto.Cipher import PKCS1_OAEP
+from Crypto.PublicKey import RSA
 import base64
 
-IMPLEMENTED_ALGORITHMS = ['Caesar Cipher', 'Simple XOR Cipher', 'Substitution Cipher', ]
+IMPLEMENTED_ALGORITHMS = ['Caesar Cipher', 'Simple XOR Cipher', 'Substitution Cipher', 'RSA Encryption', ]
 
 
 # Only works with English
@@ -116,9 +118,28 @@ def decode_AES(data, key):
     None
 
 
-def encode_RSA(data, key):
-    None
+current_cipher_text = None
+def encrypt_RSA(data, keys):
+    # print(keys)
+    cipher_text = ''
+    try:
+        # print(RSA.import_key(keys[0]))
+        encryptor = PKCS1_OAEP.new(RSA.import_key(keys[0]))
+        cipher_text = encryptor.encrypt(data.encode())
+        global current_cipher_text
+        current_cipher_text = encryptor.encrypt(data.encode())
+    except Exception as e:
+        print(e)
+    return cipher_text
 
 
-def decode_RSA(data, key):
-    None
+def decrypt_RSA(data, keys):
+    # print(keys)
+    plain_text = ''
+    try:
+        decryptor = PKCS1_OAEP.new(RSA.import_key(keys[1]))
+        plain_text = decryptor.decrypt(current_cipher_text)
+    except Exception as e:
+        print(e)
+    return plain_text
+

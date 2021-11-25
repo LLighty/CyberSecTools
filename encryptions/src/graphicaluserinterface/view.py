@@ -50,16 +50,18 @@ class View:
         self.algorithm_widgets = []
         if algorithm == IMPLEMENTED_ALGORITHMS[0]:
             self.algorithm_widgets.append(tk.Entry(master, bd=2))
-            for widget in self.algorithm_widgets:
-                widget.pack()
         if algorithm == IMPLEMENTED_ALGORITHMS[1]:
             self.algorithm_widgets.append(tk.Entry(master, bd=2))
-            for widget in self.algorithm_widgets:
-                widget.pack()
         if algorithm == IMPLEMENTED_ALGORITHMS[2]:
             self.algorithm_widgets.append(tk.Button(master, bd=2, text="Set Alphabet"))
-            for widget in self.algorithm_widgets:
-                widget.pack()
+        if algorithm == IMPLEMENTED_ALGORITHMS[3]:
+            self.algorithm_widgets.append(tk.Label(master, bd=2, text="Private Key"))
+            self.algorithm_widgets.append(tk.Entry(master, bd=2))
+            self.algorithm_widgets.append((tk.Label(master, bd=2, text="Public Key")))
+            self.algorithm_widgets.append(tk.Entry(master, bd=2))
+            self.algorithm_widgets.append(tk.Button(master, bd=2, text="Randomise Keys"))
+        for widget in self.algorithm_widgets:
+            widget.pack()
 
     def clear_algorithm_widgets(self):
         for widget in self.algorithm_widgets:
